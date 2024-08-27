@@ -1,9 +1,10 @@
 ﻿using AsyncWebpageDownloader.Application.Interfaces;
 using AsyncWebpageDownloader.Infrastructure;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using Serilog;
+
+
 
 namespace AsyncWebPageDownloader.Presentation
 {
@@ -26,26 +27,32 @@ namespace AsyncWebPageDownloader.Presentation
                 // Add more URLs as needed
             };
 
-            var tasks = new List<Task<string>>();
+            var results = await webPageDownloaderService.DownloadWebPagesAsync(urls);
 
-            foreach (var url in urls)
+            foreach (var result in results)
             {
-                tasks.Add(webPageDownloaderService.DownloadWebPageAsync(url));
-            }
-
-            var results = await Task.WhenAll(tasks);
-
-            for (int i = 0; i < results.Length; i++)
-            {
-                Console.WriteLine($"Content of {urls[i]}:");
-                Console.WriteLine(results[i]);
-                Console.WriteLine("----------------------------------------");
+                Console.WriteLine(result);
             }
         }
 
         private static void ConfigureServices(IServiceCollection services)
         {
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddEnvironmentVariables()
+                .Build();
+
+            services.AddSingleton<IConfiguration>(configuration);
             services.AddInfrastructure();
+
+            // Configure Serilog
+            Log.Logger = new LoggerConfiguration()
+                .WriteTo.Console()
+                .CreateLogger();
+
+            services.AddLogging(loggingBuilder =>
+                loggingBuilder.AddSerilog(dispose: true));
         }
     }
 }

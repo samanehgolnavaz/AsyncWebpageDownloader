@@ -19,16 +19,18 @@ namespace AsyncWebPageDownloader.API.Controllers
         [HttpPost("download")]
         public async Task<IActionResult> DownloadWebPages([FromBody] List<string> urls)
         {
-            var tasks = new List<Task<string>>();
+            //var tasks = new List<Task<string>>();
 
-            foreach (var url in urls)
-            {
-                tasks.Add(_webPageDownloaderService.DownloadWebPageAsync(url));
-            }
+            //foreach (var url in urls)
+            //{
+            //    tasks.Add(_webPageDownloaderService.DownloadWebPageAsync(url));
+            //}
 
-            var results = await Task.WhenAll(tasks);
+            //var results = await Task.WhenAll(tasks);
+            var results = await _webPageDownloaderService.DownloadWebPagesAsync(urls);
 
             return Ok(results);
         }
     }
 }
+

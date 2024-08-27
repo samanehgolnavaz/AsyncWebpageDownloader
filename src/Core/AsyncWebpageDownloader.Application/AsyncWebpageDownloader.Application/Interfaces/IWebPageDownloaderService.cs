@@ -8,6 +8,6 @@ namespace AsyncWebpageDownloader.Application.Interfaces
 {
     public interface IWebPageDownloaderService
     {
-        Task<string> DownloadWebPageAsync(string url);
+        Task<List<string>> DownloadWebPagesAsync(List<string> urls);
     }
 }
