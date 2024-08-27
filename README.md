@@ -1,4 +1,4 @@
-# Project Name
+# AsyncWebpageDownloader
 
 ## Overview
 This project is an ASP.NET Core application built with .NET 8. The application is designed to scrape multiple web pages concurrently using multithreading. It follows the Clean Architecture principles, includes unit tests, logging via Serilog, configuration management, and global exception handling.
