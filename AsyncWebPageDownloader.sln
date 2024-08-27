@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsyncWebpageDownloader.Infr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsyncWebpageDownloader.Presentation", "src\Core\AsyncWebpageDownloader.Presentation\AsyncWebpageDownloader.Presentation\AsyncWebpageDownloader.Presentation.csproj", "{F539EE23-53B4-4AE6-954C-E5FBC8704A8C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsyncWebpageDownloader.API", "src\Core\AsyncWebpageDownloader.API\AsyncWebpageDownloader.API\AsyncWebpageDownloader.API.csproj", "{C8C83798-54CE-405E-8D2E-7E66505507F8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,10 @@ Global
 		{F539EE23-53B4-4AE6-954C-E5FBC8704A8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F539EE23-53B4-4AE6-954C-E5FBC8704A8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F539EE23-53B4-4AE6-954C-E5FBC8704A8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8C83798-54CE-405E-8D2E-7E66505507F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8C83798-54CE-405E-8D2E-7E66505507F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8C83798-54CE-405E-8D2E-7E66505507F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8C83798-54CE-405E-8D2E-7E66505507F8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -53,6 +59,7 @@ Global
 		{6AEC36A2-C260-47BE-A622-7E0DE196CC67} = {66D173ED-9A55-4679-84EA-CB430A47EC29}
 		{86CEF077-F768-487B-B8D0-8BB941DE2990} = {66D173ED-9A55-4679-84EA-CB430A47EC29}
 		{F539EE23-53B4-4AE6-954C-E5FBC8704A8C} = {66D173ED-9A55-4679-84EA-CB430A47EC29}
+		{C8C83798-54CE-405E-8D2E-7E66505507F8} = {66D173ED-9A55-4679-84EA-CB430A47EC29}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6C584EC2-909C-4440-A355-7401E0E6BA21}
