@@ -3,8 +3,10 @@ using AsyncWebpageDownloader.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
-
-
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace AsyncWebPageDownloader.Presentation
 {
@@ -18,14 +20,9 @@ namespace AsyncWebPageDownloader.Presentation
             var serviceProvider = serviceCollection.BuildServiceProvider();
 
             var webPageDownloaderService = serviceProvider.GetService<IWebPageDownloaderService>();
+            var configuration = serviceProvider.GetService<IConfiguration>();
 
-            List<string> urls = new List<string>
-            {
-                "https://www.example.com",
-                "https://www.microsoft.com",
-                "https://www.google.com"
-                // Add more URLs as needed
-            };
+            List<string> urls = configuration.GetSection("WebPageDownloader:Urls").Get<List<string>>();
 
             var results = await webPageDownloaderService.DownloadWebPagesAsync(urls);
 

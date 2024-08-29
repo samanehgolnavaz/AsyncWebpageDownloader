@@ -7,25 +7,24 @@ using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using AsyncWebpageDownloader.Application.Interfaces;
 
 namespace AsyncWebPageDownloader.Application.Services
 {
     public class WebPageDownloaderService : IWebPageDownloaderService
     {
         private readonly HttpClient _httpClient;
-        private readonly string _saveDirectory;
+        private readonly string _baseSaveDirectory;
         private readonly int _maxConcurrentDownloads;
 
         public WebPageDownloaderService(HttpClient httpClient, IConfiguration configuration)
         {
             _httpClient = httpClient;
-            _saveDirectory = Path.Combine(Directory.GetCurrentDirectory(), configuration["WebPageDownloader:SaveDirectory"]);
+            _baseSaveDirectory = Path.Combine(Directory.GetCurrentDirectory(), configuration["WebPageDownloader:SaveDirectory"]);
             _maxConcurrentDownloads = int.Parse(configuration["WebPageDownloader:MaxConcurrentDownloads"]);
 
-            if (!Directory.Exists(_saveDirectory))
+            if (!Directory.Exists(_baseSaveDirectory))
             {
-                Directory.CreateDirectory(_saveDirectory);
+                Directory.CreateDirectory(_baseSaveDirectory);
             }
         }
 
@@ -44,9 +43,17 @@ namespace AsyncWebPageDownloader.Application.Services
                     response.EnsureSuccessStatusCode();
                     string content = await response.Content.ReadAsStringAsync();
 
+                    // Create a new directory for each downloaded page
+                    string directoryName = GetDirectoryNameFromUrl(url);
+                    string directoryPath = Path.Combine(_baseSaveDirectory, directoryName);
+                    if (!Directory.Exists(directoryPath))
+                    {
+                        Directory.CreateDirectory(directoryPath);
+                    }
+
                     // Save the content to a file
                     string fileName = GetFileNameFromUrl(url);
-                    string filePath = Path.Combine(_saveDirectory, fileName);
+                    string filePath = Path.Combine(directoryPath, fileName);
                     await File.WriteAllTextAsync(filePath, content);
 
                     Log.Information("Web page from {Url} downloaded and saved to {FilePath}", url, filePath);
@@ -65,6 +72,12 @@ namespace AsyncWebPageDownloader.Application.Services
 
             await Task.WhenAll(tasks);
             return results;
+        }
+
+        private string GetDirectoryNameFromUrl(string url)
+        {
+            // Generate a directory name based on the URL
+            return new Uri(url).Host;
         }
 
         private string GetFileNameFromUrl(string url)
